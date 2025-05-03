@@ -1,0 +1,21 @@
+[webpack-cli] Failed to load '/home/minikubeuser/test/nextgen/webpack.config.js' config
+[webpack-cli] ReferenceError: require is not defined in ES module scope, you can use import instead
+This file is being treated as an ES module because it has a '.js' file extension and '/home/minikubeuser/test/nextgen/package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
+    at file:///home/minikubeuser/test/nextgen/webpack.config.js:2:14
+    at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+    at async importModuleDynamicallyWrapper (node:internal/vm/module:432:15)
+    at async WebpackCLI.tryRequireThenImport (/home/minikubeuser/test/nextgen/node_modules/webpack-cli/lib/webpack-cli.js:235:34)
+    at async loadConfigByPath (/home/minikubeuser/test/nextgen/node_modules/webpack-cli/lib/webpack-cli.js:1390:27)
+    at async WebpackCLI.loadConfig (/home/minikubeuser/test/nextgen/node_modules/webpack-cli/lib/webpack-cli.js:1490:38)
+    at async WebpackCLI.createCompiler (/home/minikubeuser/test/nextgen/node_modules/webpack-cli/lib/webpack-cli.js:1755:22)
+    at async Command.<anonymous> (/home/minikubeuser/test/nextgen/node_modules/@webpack-cli/serve/lib/index.js:80:30)
+    at async Command.parseAsync (/home/minikubeuser/test/nextgen/node_modules/webpack-cli/node_modules/commander/lib/command.js:1092:5)
+Server failed to start: ReferenceError: analyzeCode is not defined
+    at registerRoutes (/home/minikubeuser/test/nextgen/server/routes.ts:180:36)
+    at <anonymous> (/home/minikubeuser/test/nextgen/server/index.ts:39:24)
+    at <anonymous> (/home/minikubeuser/test/nextgen/server/index.ts:78:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+    at async loadESM (node:internal/process/esm_loader:34:7)
+    at async handleMainPromise (node:internal/modules/run_main:106:12)

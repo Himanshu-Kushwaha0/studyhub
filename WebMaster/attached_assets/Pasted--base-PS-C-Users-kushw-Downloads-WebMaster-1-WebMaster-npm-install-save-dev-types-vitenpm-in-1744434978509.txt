@@ -1,0 +1,59 @@
+(base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> npm install --save-dev @types/vitenpm install --save
+npm error code E404
+npm error 404 Not Found - GET https://registry.npmjs.org/@types%2fvitenpm - Not found
+npm error 404
+npm error 404  '@types/vitenpm@*' is not in this registry.
+npm error 404
+npm error 404 Note that you can also install from a
+npm error 404 tarball, folder, http url, or git url.
+npm error A complete log of this run can be found in: C:\Users\kushw\AppData\Local\npm-cache\_logs\2025-04-12T05_15_19_309Z-debug-0.log
+(base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> (base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> npm install --save-dev @types/vitenpm install --save
+At line:1 char:8
++ (base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> npm insta ...
++        ~~
+Unexpected token 'PS' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+
+(base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> npm error code E404
+Unknown command: "error"
+
+To see a list of supported npm commands, run:
+  npm help
+(base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> npm error 404 Not Found - GET https://registry.npmjs.org/@types%2fvitenpm - Not found
+Unknown command: "error"
+
+To see a list of supported npm commands, run:
+  npm help
+(base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> npm error 404
+Unknown command: "error"
+
+To see a list of supported npm commands, run:
+  npm help
+(base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> npm error 404  '@types/vitenpm@*' is not in this registry.
+Unknown command: "error"
+
+To see a list of supported npm commands, run:
+  npm help
+(base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> npm error 404
+Unknown command: "error"
+
+To see a list of supported npm commands, run:
+  npm help
+(base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> npm error 404 Note that you can also install from a
+Unknown command: "error"
+
+To see a list of supported npm commands, run:
+  npm help
+(base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> npm error 404 tarball, folder, http url, or git url.
+
+Unknown command: "error"
+
+To see a list of supported npm commands, run:
+  npm help
+(base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> npm error A complete log of this run can be found in: C:\Users\kushw\AppData\Local\npm-cache\_logs\2025-04-12T05_15_19_309Z-debug-0.log
+Unknown command: "error"
+
+To see a list of supported npm commands, run:
+  npm help
+(base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> (base) PS C:\Users\kushw\Downloads\WebMaster (1)\WebMaster> 

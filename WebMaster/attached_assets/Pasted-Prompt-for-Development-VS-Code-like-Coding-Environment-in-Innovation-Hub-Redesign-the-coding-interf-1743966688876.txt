@@ -1,0 +1,96 @@
+Prompt for Development: VS Code-like Coding Environment in Innovation Hub
+Redesign the coding interface in the Innovation Hub on the study-hub platform to resemble the VS Code user experience. This redesign must provide an intuitive, multi-language code editor with features for writing, running, and compiling code in various programming languages. Incorporate AI-powered code generation using OpenAI APIs to deliver dynamic and intelligent coding assistance.
+
+1. Core Design and Features
+Visual Design
+Create a VS Code-like interface with:
+
+A side panel for file navigation, terminal access, and extension management.
+
+Tabs for multiple files, allowing users to work on multiple projects simultaneously.
+
+Syntax highlighting, line numbering, and intelligent code formatting.
+
+Coding Environment
+Support multiple programming languages, including:
+
+Python, C++, Java, JavaScript, HTML/CSS, and more.
+
+Provide intelligent auto-completion with suggestions tailored to the active programming language.
+
+Include integrated debugging tools with breakpoints, step-through execution, and variable inspection.
+
+2. Code Execution and Compilation
+Run and Compile Code
+Add a "Run" button to execute code directly within the editor.
+
+Provide real-time compilation and error feedback for compiled languages (e.g., C++, Java).
+
+For interpreted languages (e.g., Python, JavaScript), show outputs in an integrated terminal panel.
+
+Language-Specific Features
+Include support for language-specific tools like:
+
+Python: Virtual environments, package management, and plotting integrations.
+
+C++: Access to GCC or Clang for compiling and debugging.
+
+Java: Integration with JDK for compilation and execution.
+
+JavaScript: Integration with Node.js for runtime execution.
+
+3. AI Code Generation with OpenAI API
+Code Generation Features
+Integrate AI-powered code assistance tools using OpenAI’s GPT models to:
+
+Generate complete functions or code snippets based on user prompts.
+
+Suggest improvements to existing code and explain its functionality.
+
+Allow users to enter detailed prompts for AI-generated solutions (e.g., "Write a Python function to sort a list using bubble sort").
+
+Error Detection and Debugging
+Use AI to identify bugs in the code and provide suggestions for fixes in real-time.
+
+4. OpenAI API Integration
+Dynamic API Usage
+Allow users to input their OpenAI API key dynamically within the platform settings or as prompted when AI features are accessed.
+
+Use the OpenAI API to:
+
+Autogenerate code for user-specified tasks.
+
+Provide detailed explanations of code snippets for educational purposes.
+
+Custom AI Key Manager
+Provide a key management tool where users can:
+
+Add or update their OpenAI API key.
+
+Test the API key to ensure functionality.
+
+Securely store keys using encryption.
+
+5. Multi-Device Compatibility
+Ensure the coding environment is fully responsive and accessible via:
+
+Web browsers: Provide a seamless experience in all major browsers.
+
+Mobile apps: Include support for mobile-friendly code editing and AI generation features.
+
+6. Integration with Git
+Version Control
+Include Git integration for:
+
+Repository creation, branching, commits, and pull requests.
+
+Add visual diff tools to compare file changes directly in the editor.
+
+GitHub Integration
+Allow users to connect their GitHub accounts for seamless project management and deployment.
+
+7. User Settings and Themes
+Customization
+Provide VS Code-like themes (e.g., Dark Mode, Light Mode, custom themes).
+
+Allow users to configure settings like indentation style, font size, and keyboard shortcuts.

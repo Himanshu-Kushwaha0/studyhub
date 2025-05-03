@@ -1,0 +1,262 @@
+import type { Express, Request, Response } from "express";
+import { createServer, type Server } from "http";
+import { storage } from "./storage";
+import { 
+  insertUserSchema, 
+  insertProjectSchema, 
+  insertCodeSnippetSchema,
+  insertProjectMemberSchema,
+  insertAchievementSchema,
+  insertUserAchievementSchema
+} from "@shared/schema";
+import { z } from "zod";
+import { ZodError } from "zod";
+import { fromZodError } from "zod-validation-error";
+import { generateText, generateWebsite, generateReplitApp, analyzeCode } from "./openai";
+import { generateVideo, checkVideoStatus } from "./predis";
+import { generateImage } from "./together";
+import express from "express";
+
+export async function registerRoutes(app: Express): Promise<Server> {
+  // Error handling middleware
+  const handleError = (err: Error, res: Response) => {
+    if (err instanceof ZodError) {
+      const validationError = fromZodError(err);
+      return res.status(400).json({ message: validationError.message });
+    }
+    
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
+  };
+
+  // User routes
+  app.post("/api/users", async (req: Request, res: Response) => {
+    try {
+      const userData = insertUserSchema.parse(req.body);
+      const user = await storage.createUser(userData);
+      res.status(201).json(user);
+    } catch (err) {
+      handleError(err as Error, res);
+    }
+  });
+
+  app.get("/api/users/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const user = await storage.getUser(id);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      res.json(user);
+    } catch (err) {
+      handleError(err as Error, res);
+    }
+  });
+
+  // Project routes
+  app.post("/api/projects", async (req: Request, res: Response) => {
+    try {
+      const projectData = insertProjectSchema.parse(req.body);
+      const project = await storage.createProject(projectData);
+      res.status(201).json(project);
+    } catch (err) {
+      handleError(err as Error, res);
+    }
+  });
+
+  app.get("/api/projects", async (req: Request, res: Response) => {
+    try {
+      const userId = req.query.userId ? parseInt(req.query.userId as string) : undefined;
+      const projects = await storage.getProjects(userId);
+      res.json(projects);
+    } catch (err) {
+      handleError(err as Error, res);
+    }
+  });
+
+  app.get("/api/projects/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const project = await storage.getProject(id);
+      
+      if (!project) {
+        return res.status(404).json({ message: "Project not found" });
+      }
+      
+      res.json(project);
+    } catch (err) {
+      handleError(err as Error, res);
+    }
+  });
+
+  // Project members routes
+  app.post("/api/project-members", async (req: Request, res: Response) => {
+    try {
+      const memberData = insertProjectMemberSchema.parse(req.body);
+      const member = await storage.addProjectMember(memberData);
+      res.status(201).json(member);
+    } catch (err) {
+      handleError(err as Error, res);
+    }
+  });
+
+  app.get("/api/projects/:projectId/members", async (req: Request, res: Response) => {
+    try {
+      const projectId = parseInt(req.params.projectId);
+      const members = await storage.getProjectMembers(projectId);
+      res.json(members);
+    } catch (err) {
+      handleError(err as Error, res);
+    }
+  });
+
+  // Code snippets routes
+  app.post("/api/code-snippets", async (req: Request, res: Response) => {
+    try {
+      const snippetData = insertCodeSnippetSchema.parse(req.body);
+      const snippet = await storage.createCodeSnippet(snippetData);
+      res.status(201).json(snippet);
+    } catch (err) {
+      handleError(err as Error, res);
+    }
+  });
+
+  app.get("/api/code-snippets", async (req: Request, res: Response) => {
+    try {
+      const userId = req.query.userId ? parseInt(req.query.userId as string) : undefined;
+      const projectId = req.query.projectId ? parseInt(req.query.projectId as string) : undefined;
+      const snippets = await storage.getCodeSnippets(userId, projectId);
+      res.json(snippets);
+    } catch (err) {
+      handleError(err as Error, res);
+    }
+  });
+
+  // Achievements routes
+  app.post("/api/achievements", async (req: Request, res: Response) => {
+    try {
+      const achievementData = insertAchievementSchema.parse(req.body);
+      const achievement = await storage.createAchievement(achievementData);
+      res.status(201).json(achievement);
+    } catch (err) {
+      handleError(err as Error, res);
+    }
+  });
+
+  app.get("/api/achievements", async (req: Request, res: Response) => {
+    try {
+      const achievements = await storage.getAchievements();
+      res.json(achievements);
+    } catch (err) {
+      handleError(err as Error, res);
+    }
+  });
+
+  // User achievements routes
+  app.post("/api/user-achievements", async (req: Request, res: Response) => {
+    try {
+      const userAchievementData = insertUserAchievementSchema.parse(req.body);
+      const userAchievement = await storage.unlockAchievement(userAchievementData);
+      res.status(201).json(userAchievement);
+    } catch (err) {
+      handleError(err as Error, res);
+    }
+  });
+
+  app.get("/api/users/:userId/achievements", async (req: Request, res: Response) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const achievements = await storage.getUserAchievements(userId);
+      res.json(achievements);
+    } catch (err) {
+      handleError(err as Error, res);
+    }
+  });
+
+  // AI Tools routes
+  app.post("/api/ai/generate-text", generateText);
+  app.post("/api/ai/generate-website", generateWebsite);
+  app.post("/api/ai/generate-replit-app", generateReplitApp);
+  app.post("/api/ai/analyze-code", analyzeCode);
+
+  // Predis Video Generation routes
+  app.post("/api/video/generate", generateVideo);
+  app.get("/api/video/:videoId/status", checkVideoStatus);
+  
+  // Together.ai Image Generation routes
+  app.post("/api/image/generate", generateImage);
+  
+  // API Key Management routes
+  // Create a simple in-memory store for API keys
+  const apiKeys: Record<string, string> = {
+    together: process.env.TOGETHER_API_KEY || '',
+    predis: process.env.PREDIS_API_KEY || '',
+    openai: process.env.OPENAI_API_KEY || ''
+  };
+  
+  // Endpoint to update API keys
+  app.post("/api/settings/api-key", async (req: Request, res: Response) => {
+    try {
+      const { service, apiKey } = req.body;
+      
+      if (!service || !apiKey) {
+        return res.status(400).json({
+          success: false,
+          message: "Service and API key are required"
+        });
+      }
+      
+      // Validate that service is one of the allowed values
+      if (!['together', 'predis', 'openai'].includes(service)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid service. Must be one of: together, predis, openai"
+        });
+      }
+      
+      // Here you would validate the API key against the respective service
+      // For now, we'll just store it in memory for the session
+      apiKeys[service] = apiKey;
+      
+      // Set the API key as an environment variable for this session
+      process.env[`${service.toUpperCase()}_API_KEY`] = apiKey;
+      
+      console.log(`Updated API key for ${service}`);
+      
+      return res.status(200).json({
+        success: true,
+        message: `API key for ${service} updated successfully`
+      });
+    } catch (error) {
+      console.error("Error updating API key:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to update API key"
+      });
+    }
+  });
+  
+  // Endpoint to check if API keys are set
+  app.get("/api/settings/api-key-status", (req: Request, res: Response) => {
+    const { service } = req.query;
+    
+    if (!service || !['together', 'predis', 'openai'].includes(service as string)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid service parameter"
+      });
+    }
+    
+    const hasKey = !!apiKeys[service as string];
+    
+    return res.status(200).json({
+      success: true,
+      hasKey
+    });
+  });
+
+  const httpServer = createServer(app);
+  return httpServer;
+}

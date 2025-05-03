@@ -1,0 +1,54 @@
+Prompt for Development: Error-Handling with API Key Input for Image and Video Generation
+Develop a robust error-handling mechanism for the Image and Video Generation Tools within the study-hub platform. This feature will ensure that users can easily input or update their API keys for third-party services (e.g., Together AI and Predis AI) in case the API request fails. The following requirements should be implemented:
+
+Core Functionality
+1. Error Detection
+Automatically detect API failures during image or video generation requests.
+
+Display a clear, user-friendly error message when an API fails, specifying:
+
+The service that experienced the failure (e.g., Together AI or Predis AI).
+
+The probable cause of failure (e.g., missing API key, invalid API key, or quota exhaustion).
+
+2. Input or Update API Key
+Provide an input field on the error screen where users can paste or type their API key.
+
+Include a dropdown or toggle for users to select the respective service (e.g., Together AI or Predis AI) they want to update the API key for.
+
+Validate the API key instantly upon submission and display a success or failure message.
+
+3. Persistent API Management
+Store API keys securely in encrypted storage to avoid re-entering keys for each session.
+
+Allow users to update, delete, or view their stored API keys from a "Manage API Keys" section in their settings.
+
+Interactive User Interface
+Error Modal Design:
+When an API fails, display a modal with:
+
+A prominent error message that describes the issue. Example:
+
+"We encountered an issue while generating your image/video using Together AI. Please verify your API key."
+A dropdown menu to select the respective service. Example:
+
+[Together AI] [Predis AI]
+An input field to paste the new API key. Example:
+
+Enter Your API Key: [_________________]
+Buttons:
+
+"Submit API Key": Validates and stores the API key.
+
+"Try Again": Automatically retries the generation process after the key is updated.
+
+Optional Features
+1. Predefined API Key Tips
+Include helper text or tooltips to guide users on retrieving API keys from Together AI or Predis AI, with direct links to their API documentation:
+
+Together AI API Documentation: https://together.ai/documentation
+
+Predis AI API Documentation: https://predis.ai/docs
+
+2. Fallback Option
+If both APIs fail, provide a local or in-platform fallback mechanism (e.g., using an open-source or alternative generation model).
